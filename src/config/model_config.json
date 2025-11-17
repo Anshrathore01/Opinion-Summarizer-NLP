@@ -1,0 +1,6 @@
+{
+  "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+  "summarizer_model": "google/pegasus-xsum",
+  "max_summary_length": 128,
+  "min_summary_length": 32
+}

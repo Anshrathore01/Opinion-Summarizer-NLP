@@ -1,0 +1,14 @@
+data:
+  raw_path: artifacts/raw_data/electronics_sample_50k.json
+  cleaned_path: artifacts/cleaned_data/clean_reviews.parquet
+  embeddings_path: artifacts/embeddings/review_embeddings.npy
+  cluster_assignments_path: artifacts/clustering/cluster_labels.csv
+  summaries_path: artifacts/summaries/cluster_summaries.json
+models:
+  embedding_model: sentence-transformers/all-MiniLM-L6-v2
+  summarizer_model: google/pegasus-xsum
+clustering:
+  n_clusters: 20
+  pca_components: 50
+app:
+  results_cache: artifacts/summaries/cluster_summaries.json

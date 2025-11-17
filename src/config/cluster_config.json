@@ -1,0 +1,6 @@
+{
+  "n_clusters": 20,
+  "use_pca": true,
+  "pca_components": 50,
+  "random_state": 42
+}

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Opinion Summarizer</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
+</head>
+<body>
+    <header>
+        <h1>Opinion Summarizer</h1>
+        <p>Explore high-level themes from thousands of electronics reviews.</p>
+    </header>
+    <main>
+        <section>
+            <h2>Ask a question</h2>
+            <form action="{{ url_for('results') }}" method="post">
+                <label for="query">What would you like to know?</label>
+                <textarea id="query" name="query" placeholder="e.g. battery life of noise cancelling headphones" required></textarea>
+                <button type="submit">Search</button>
+            </form>
+        </section>
+        {% if summaries %}
+        <section>
+            <h2>Latest cluster summaries</h2>
+            {% for item in summaries %}
+            <div class="summary-card">
+                <h3>Cluster {{ item.cluster_id }} ({{ item.size }} reviews)</h3>
+                <p>{{ item.summary }}</p>
+            </div>
+            {% endfor %}
+        </section>
+        {% endif %}
+    </main>
+</body>
+</html>

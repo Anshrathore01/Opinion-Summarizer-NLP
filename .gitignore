@@ -1,5 +1,6 @@
 
 venv/
+.venv/
 .env/
 
 
@@ -17,6 +18,21 @@ artifacts/*
 !artifacts/clustering/
 !artifacts/summaries/
 !artifacts/models/
+
+# Keep directory structure but ignore generated assets
+artifacts/raw_data/*
+!artifacts/raw_data/.gitkeep
+!artifacts/raw_data/README.md
+artifacts/cleaned_data/*
+!artifacts/cleaned_data/.gitkeep
+artifacts/embeddings/*
+!artifacts/embeddings/.gitkeep
+artifacts/clustering/*
+!artifacts/clustering/.gitkeep
+artifacts/summaries/*
+!artifacts/summaries/.gitkeep
+artifacts/models/*
+!artifacts/models/.gitkeep
 
 # Local datasets too large for GitHub
 artifacts/raw_data/Electronics_5\ 2.json

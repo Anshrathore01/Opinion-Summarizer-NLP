@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Search results • Opinion Summarizer</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
+</head>
+<body>
+    <header>
+        <h1>Search results</h1>
+        <p>Query: <strong>{{ query }}</strong></p>
+        <a href="{{ url_for('home') }}" style="color:white">← Back</a>
+    </header>
+    <main>
+        {% if results %}
+        <section>
+            {% for result in results %}
+            <div class="summary-card">
+                <h3>Score {{ '{:.2f}'.format(result.score * 100) }}%</h3>
+                <p>{{ result.text }}</p>
+            </div>
+            {% endfor %}
+        </section>
+        {% else %}
+        <p>No matching reviews found. Try a different question.</p>
+        {% endif %}
+    </main>
+</body>
+</html>

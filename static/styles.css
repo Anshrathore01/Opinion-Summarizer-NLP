@@ -1,0 +1,59 @@
+body {
+    font-family: "Inter", "Segoe UI", sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #f4f6fb;
+    color: #1f2933;
+}
+
+header {
+    background: linear-gradient(120deg, #0b7fab, #3aa17e);
+    color: white;
+    padding: 2rem;
+    text-align: center;
+}
+
+main {
+    max-width: 960px;
+    margin: 2rem auto;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 20px 40px rgba(15, 23, 42, 0.1);
+    padding: 2rem 3rem;
+}
+
+form textarea {
+    width: 100%;
+    min-height: 140px;
+    border-radius: 8px;
+    border: 1px solid #d3dae6;
+    padding: 1rem;
+    font-size: 1rem;
+    resize: vertical;
+}
+
+button {
+    background: #0b7fab;
+    border: none;
+    color: white;
+    font-size: 1rem;
+    padding: 0.9rem 1.8rem;
+    border-radius: 999px;
+    cursor: pointer;
+    margin-top: 1rem;
+}
+
+button:hover {
+    background: #095c7d;
+}
+
+.summary-card {
+    border: 1px solid #e5e9f2;
+    border-radius: 10px;
+    padding: 1rem 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.summary-card h3 {
+    margin-top: 0;
+}
