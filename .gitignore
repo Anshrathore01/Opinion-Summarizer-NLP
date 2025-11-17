@@ -18,5 +18,8 @@ artifacts/*
 !artifacts/summaries/
 !artifacts/models/
 
+# Local datasets too large for GitHub
+artifacts/raw_data/Electronics_5\ 2.json
+
 
 .DS_Store
