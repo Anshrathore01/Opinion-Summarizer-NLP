@@ -1,8 +1,12 @@
 
+# Virtual environments
+
 venv/
 .venv/
 .env/
 
+
+# Python cache
 
 __pycache__/
 *.pyc
@@ -11,31 +15,39 @@ __pycache__/
 .ipynb_checkpoints/
 
 
-artifacts/*
-!artifacts/raw_data/
-!artifacts/cleaned_data/
-!artifacts/embeddings/
-!artifacts/clustering/
-!artifacts/summaries/
-!artifacts/models/
+# Ignore all training artifacts
 
-# Keep directory structure but ignore generated assets
-artifacts/raw_data/*
-!artifacts/raw_data/.gitkeep
-!artifacts/raw_data/README.md
-artifacts/cleaned_data/*
-!artifacts/cleaned_data/.gitkeep
-artifacts/embeddings/*
-!artifacts/embeddings/.gitkeep
-artifacts/clustering/*
-!artifacts/clustering/.gitkeep
-artifacts/summaries/*
-!artifacts/summaries/.gitkeep
-artifacts/models/*
-!artifacts/models/.gitkeep
+artifacts/raw_data/
+artifacts/cleaned_data/
+artifacts/embeddings/
+artifacts/clustering/
+artifacts/tmp/
+artifacts/models_backup/
 
-# Local datasets too large for GitHub
-artifacts/raw_data/Electronics_5\ 2.json
 
+# Allow ONLY final inference artifacts
+
+!artifacts/vector_index.faiss
+!artifacts/cluster_summaries.json
+!artifacts/sentence_transformer/**
+!artifacts/summarizer_model/**
+
+# Notebooks (training only)
+
+*.ipynb
+notebooks/
+
+
+# Datasets (too large for GitHub)
+
+*.csv
+*.json
+*.xlsx
+datasets/
+data/
+
+
+# OS / editor files
 
 .DS_Store
+Thumbs.db
