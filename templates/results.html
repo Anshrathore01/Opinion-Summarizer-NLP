@@ -12,7 +12,15 @@
         <a href="{{ url_for('home') }}" style="color:white">← Back</a>
     </header>
     <main>
-        {% if results %}
+        {% if error %}
+        <section>
+            <div class="summary-card" style="border-color: #ef4444; background-color: #fef2f2;">
+                <h3 style="color: #dc2626;">Error</h3>
+                <p>{{ error }}</p>
+                <p>Please try again or contact support if the issue persists.</p>
+            </div>
+        </section>
+        {% elif results %}
         <section>
             {% for result in results %}
             <div class="summary-card">

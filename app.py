@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import os
 from dataclasses import dataclass
 from functools import lru_cache
 from pathlib import Path
@@ -57,11 +58,27 @@ def results():
     query = request.form.get("query", "").strip()
     if not query:
         return redirect(url_for("home"))
-    engine = load_query_engine()
-    matches = engine.search(query)
-    results = [QueryResult(text=doc, score=score) for doc, score in matches]
-    return render_template("results.html", query=query, results=results)
+    try:
+        engine = load_query_engine()
+        matches = engine.search(query)
+        results = [QueryResult(text=doc, score=score) for doc, score in matches]
+        return render_template("results.html", query=query, results=results)
+    except Exception as e:
+        # Log error and return user-friendly message
+        return render_template("results.html", query=query, results=[], error=str(e))
+
+
+@app.route("/health")
+def health():
+    """Health check endpoint for deployment monitoring."""
+    try:
+        config = load_config()
+        return {"status": "healthy", "config_loaded": True}, 200
+    except Exception as e:
+        return {"status": "unhealthy", "error": str(e)}, 500
 
 
 if __name__ == "__main__":
-    app.run(debug=True, port=8000)
+    # For Hugging Face Spaces, use port 7860
+    port = int(os.environ.get("PORT", 7860))
+    app.run(host="0.0.0.0", port=port, debug=False)

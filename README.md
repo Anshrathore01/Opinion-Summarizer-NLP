@@ -1,58 +1,66 @@
-# Opinion-Summarizer-NLP
+---
+title: Opinion Summarizer
+emoji: 🔍
+colorFrom: blue
+colorTo: green
+sdk: docker
+pinned: false
+license: mit
+---
 
-An end-to-end workflow that turns raw Amazon electronics reviews into compact opinion summaries and a lightweight semantic search experience.
+# Opinion Summarizer
 
-## Project layout
+An end-to-end NLP workflow that transforms raw Amazon electronics reviews into compact opinion summaries and provides a semantic search experience.
+
+## Features
+
+- **Semantic Search**: Query thousands of reviews using natural language
+- **Cluster Summaries**: View high-level themes extracted from review clusters
+- **Abstractive Summarization**: Uses Google's Pegasus model for generating summaries
+
+## How it Works
+
+1. **Data Processing**: Raw reviews are cleaned and embedded using sentence transformers
+2. **Clustering**: Reviews are grouped by semantic similarity
+3. **Summarization**: Each cluster is summarized using abstractive summarization
+4. **Search**: Query the review corpus using semantic similarity search
+
+## Usage
+
+1. Enter a query in natural language (e.g., "battery life of noise cancelling headphones")
+2. View the most relevant reviews ranked by similarity
+3. Browse cluster summaries to discover common themes
+
+## Technical Details
+
+- **Embedding Model**: `sentence-transformers/all-MiniLM-L6-v2`
+- **Summarization Model**: `google/pegasus-xsum`
+- **Clustering**: K-means with PCA dimensionality reduction
+- **Search**: Cosine similarity over embeddings using scikit-learn NearestNeighbors
+
+## Project Structure
 
 ```
-├── src/components      # modular data/ML building blocks
-├── src/pipelines       # executable steps (load→embed→cluster→summarise)
-├── artifacts/          # generated assets (clean data, embeddings, etc.)
+├── src/components      # Modular data/ML building blocks
+├── src/pipelines       # Executable steps (load→embed→cluster→summarise)
+├── artifacts/          # Generated assets (clean data, embeddings, etc.)
 ├── templates/ + static/ # Flask UI
-└── notebooks/EDA.ipynb # exploratory analysis walkthrough
+└── app.py             # Flask application entrypoint
 ```
 
-## Getting started
+## Local Development
 
-1. **Install dependencies**
+1. Install dependencies:
    ```bash
-   python -m venv venv
-   source venv/bin/activate
    pip install -r requirements.txt
    ```
-2. **Place the sampled dataset** at `artifacts/raw_data/electronics_sample_50k.json`. This should be a JSONL file where each line is a review dict from the Amazon Electronics dataset.
-3. **Generate assets**
+
+2. Generate artifacts (if needed):
    ```bash
-   python -m src.pipelines.build_embeddings_pipeline
-   python -m src.pipelines.clustering_pipeline
-   python -m src.pipelines.summarization_pipeline
+   python -m src.pipelines.full_run_pipeline
    ```
-   or simply run `python -m src.pipelines.full_run_pipeline` to execute all three.
-4. **Launch the app**
+
+3. Run the app:
    ```bash
    flask --app app run --port 8000
    ```
-
-## Pipelines
-
-| Step | Purpose | Output |
-| --- | --- | --- |
-| `build_embeddings_pipeline` | load → clean → embed reviews | `artifacts/cleaned_data/*.parquet`, `artifacts/embeddings/*.npy` |
-| `clustering_pipeline` | group reviews by semantic similarity | `artifacts/clustering/cluster_labels.csv` |
-| `summarization_pipeline` | produce abstractive summary per cluster | `artifacts/summaries/cluster_summaries.json` |
-
-## Web interface
-
-The Flask app exposes:
-- `/` overview page with the most recent cluster summaries
-- `/results` POST route to run semantic search over the indexed reviews
-
-Static styling lives in `static/styles.css`; HTML templates sit in `templates/`.
-
-## Notebook
-
-`notebooks/EDA.ipynb` reproduces the exploratory plots (length distributions, word clouds, rating histograms, etc.) over the sampled 50k reviews.
-
-## Configuration
-
-Tune paths and hyper-parameters inside `src/config/config.yaml`, `src/config/model_config.json`, and `src/config/cluster_config.json`.
