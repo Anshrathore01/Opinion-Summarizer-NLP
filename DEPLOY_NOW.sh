@@ -22,10 +22,19 @@ USERNAME="Anshrathore01"
 SPACE_NAME="opinion-summarizer"
 REPO_ID="${USERNAME}/${SPACE_NAME}"
 
-echo "📦 Step 1: Creating Space (if it doesn't exist)..."
+echo "📦 Step 1: Installing huggingface_hub if needed..."
+python3 -m pip install huggingface_hub -q --user 2>/dev/null || python3 -m pip install huggingface_hub -q
+
+echo "📦 Step 2: Creating Space (if it doesn't exist)..."
 python3 << EOF
 import os
-from huggingface_hub import create_repo
+import sys
+try:
+    from huggingface_hub import create_repo
+except ImportError:
+    import subprocess
+    subprocess.check_call([sys.executable, "-m", "pip", "install", "huggingface_hub", "-q", "--user"])
+    from huggingface_hub import create_repo
 
 try:
     create_repo(
@@ -45,13 +54,13 @@ except Exception as e:
 EOF
 
 echo ""
-echo "🔗 Step 2: Setting up git remote..."
+echo "🔗 Step 3: Setting up git remote..."
 git remote remove space 2>/dev/null || true
 git remote add space "https://${USERNAME}:${HF_TOKEN}@huggingface.co/spaces/${REPO_ID}"
 
 echo "✅ Git remote configured"
 echo ""
-echo "📤 Step 3: Pushing code..."
+echo "📤 Step 4: Pushing code..."
 git push space main
 
 echo ""
