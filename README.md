@@ -50,17 +50,54 @@ An end-to-end NLP workflow that transforms raw Amazon electronics reviews into c
 
 ## Local Development
 
-1. Install dependencies:
-   ```bash
-   pip install -r requirements.txt
-   ```
+Follow these steps to run the application on your computer.
 
-2. Generate artifacts (if needed):
-   ```bash
-   python -m src.pipelines.full_run_pipeline
-   ```
+### Step 1: Set Up a Python Virtual Environment
+It is highly recommended to use a virtual environment to avoid package conflicts.
 
-3. Run the app:
-   ```bash
-   flask --app app run --port 8000
-   ```
+**On macOS / Linux:**
+```bash
+python3 -m venv venv
+source venv/bin/activate
+```
+
+**On Windows (Command Prompt):**
+```cmd
+python -m venv venv
+venv\Scripts\activate
+```
+
+**On Windows (PowerShell):**
+```powershell
+python -m venv venv
+.\venv\Scripts\activate
+```
+
+### Step 2: Install Dependencies
+Install all required libraries inside the virtual environment:
+```bash
+pip install -r requirements.txt
+```
+
+### Step 3: Run the Web App
+The repository already includes pre-generated artifacts (cleaned reviews, clusters, Pegasus summaries, and review embeddings) in the `artifacts/` folder. **You do not need to run the heavy pipeline to start the app.**
+
+Run the Flask development server:
+```bash
+flask --app app run --port 8000
+```
+
+Once started, open your web browser and go to:
+**[http://127.0.0.1:8000](http://127.0.0.1:8000)**
+
+---
+
+### Step 4 (Optional): Regenerate Artifacts
+If you want to re-run the entire offline NLP pipeline (clean the data, generate embeddings, cluster reviews, and run the Pegasus abstractive summarizer), run the following command:
+
+```bash
+python -m src.pipelines.full_run_pipeline
+```
+> [!NOTE]
+> Re-running the pipeline will download large pre-trained model weights (Google Pegasus is ~2.2GB, Sentence Transformers is ~120MB) and may take a significant amount of time and computer resources (RAM/CPU) to complete.
+

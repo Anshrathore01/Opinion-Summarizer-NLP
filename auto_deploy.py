@@ -18,7 +18,7 @@ space_name = "opinion-summarizer"
 repo_id = f"{username}/{space_name}"
 
 def main():
-    print("🚀 Opinion Summarizer - Automated Deployment")
+    print("Opinion Summarizer - Automated Deployment")
     print("=" * 50)
     print()
     
@@ -26,7 +26,7 @@ def main():
     token = os.environ.get("HF_TOKEN") or os.environ.get("HUGGINGFACE_TOKEN")
     
     if not token:
-        print("📝 Hugging Face Token Required")
+        print("Hugging Face Token Required")
         print()
         print("Please provide your Hugging Face token.")
         print("Get it from: https://huggingface.co/settings/tokens")
@@ -35,7 +35,7 @@ def main():
         
         if not token:
             print()
-            print("⚠️  No token provided. Will attempt git push instead.")
+            print("No token provided. Will attempt git push instead.")
             print("   Make sure you're authenticated with git credential helper.")
             print()
             token = None
@@ -43,7 +43,7 @@ def main():
     # Step 1: Create Space
     if token:
         try:
-            print(f"📦 Creating Space: {repo_id}")
+            print(f"Creating Space: {repo_id}")
             api = HfApi(token=token)
             
             try:
@@ -55,21 +55,21 @@ def main():
                     token=token,
                     exist_ok=True
                 )
-                print("✅ Space created/verified successfully!")
+                print("Space created/verified successfully!")
             except Exception as e:
                 if "already exists" in str(e).lower() or "409" in str(e):
-                    print("✅ Space already exists, continuing...")
+                    print("Space already exists, continuing...")
                 else:
                     raise
             print()
         except Exception as e:
-            print(f"⚠️  Could not create Space via API: {e}")
+            print(f"Could not create Space via API: {e}")
             print("   Will try git push instead...")
             print()
             token = None
     
     # Step 2: Set up git remote
-    print("🔗 Setting up git remote...")
+    print("Setting up git remote...")
     try:
         subprocess.run(
             ["git", "remote", "remove", "space"],
@@ -86,14 +86,14 @@ def main():
             ["git", "remote", "add", "space", remote_url],
             check=True
         )
-        print("✅ Git remote configured")
+        print("Git remote configured")
         print()
     except subprocess.CalledProcessError as e:
-        print(f"⚠️  Could not set up git remote: {e}")
+        print(f"Could not set up git remote: {e}")
         print()
     
     # Step 3: Push to Space
-    print("📤 Pushing code to Hugging Face Space...")
+    print("Pushing code to Hugging Face Space...")
     print()
     
     try:
@@ -114,21 +114,21 @@ def main():
         
         print()
         print("=" * 50)
-        print("✅ DEPLOYMENT SUCCESSFUL!")
+        print("DEPLOYMENT SUCCESSFUL!")
         print("=" * 50)
         print()
-        print(f"🌐 Your app is deploying at:")
+        print(f"Your app is deploying at:")
         print(f"   https://huggingface.co/spaces/{repo_id}")
         print()
-        print("⏳ Build will take 10-15 minutes.")
+        print("Build will take 10-15 minutes.")
         print("   Check progress in the 'Logs' tab of your Space.")
         print()
-        print("📊 Monitor build: https://huggingface.co/spaces/{}/settings".format(repo_id))
+        print("Monitor build: https://huggingface.co/spaces/{}/settings".format(repo_id))
         
     except subprocess.CalledProcessError as e:
         print()
         print("=" * 50)
-        print("❌ Push failed")
+        print("Push failed")
         print("=" * 50)
         print()
         print("Possible solutions:")
